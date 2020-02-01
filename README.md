@@ -1,6 +1,7 @@
 Steps used to run this project:
 
-1. Clone this project.
+1. Clone this project make virtual environment <br/>
+ and install requirements.txt
 
 2. Create database named designdb in postgres.
 3. Make appropriate changes in database setting in setting.py
