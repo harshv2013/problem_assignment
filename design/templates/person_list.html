@@ -1,0 +1,22 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>Book List</h1>
+
+    {% if person_list %}
+    <ul>
+
+      {% for person in person_list %}
+      <li>
+        <a href="{{ book.get_absolute_url }}">{{ person.name }}</a> ({{person.age}})
+      </li>
+      {% endfor %}
+
+    </ul>
+
+    {% else %}
+      <p>There are no person in the library.</p>
+    {% endif %}
+{% endblock %}
+
+
