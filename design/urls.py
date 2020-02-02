@@ -16,8 +16,10 @@ urlpatterns = [
     path('emp', views.emp , name='home'),
     # path('show', views.show ),
     path('show', views.PersonListView.as_view(), name='person-list'),
+    # path('show', views.PersonDetailView.as_view(), name='person-detail'),
+    path('detail/<int:id>', views.person_detail, name='person-detail'),
     path('edit/<int:id>', views.edit),
-    path('update/<int:id>', views.update),
+    # path('update', views.update),
     path('delete/<int:id>', views.destroy),
 
 ]

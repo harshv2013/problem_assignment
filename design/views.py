@@ -30,6 +30,10 @@ class PersonListView(generic.ListView):
     model = Person
     paginate_by = 10
 
+class PersonDetailView(generic.ListView):
+    model = Person
+
+
 
 
 def emp(request):
@@ -45,7 +49,7 @@ def emp(request):
                 pass
     else:
         form = PersonForm()
-    return render(request,'index.html',{'form':form})
+    return render(request,'design/person_edit.html',{'form':form})
 
 def show(request):
     persons = Person.objects.all()
@@ -59,30 +63,45 @@ def show(request):
 #     return render(request,'edit.html', {'person':person})
 
 def edit(request, id):
+    print('id received----',id)
     person = get_object_or_404(Person, id=id)
+    print('person object is ---', person)
     if request.method == "POST":
         form = PersonForm(request.POST, instance=person)
 
+
+        # if form.is_valid():
+        #     try:
+        #         form.save()
+        #         return redirect('/show')
+        #     except:
+        # #         pass
         if form.is_valid():
-            try:
-                form.save()
-                return redirect('/show')
-            except:
-                pass
+            form.save()
+        # person = form.save(commit=False)
+        # post.author = request.user
+        # post.save()
+        return redirect('/show')
             # return redirect('post_detail', pk=post.pk)
     else:
         form = PersonForm(instance=person)
         # print('form dict is ---------------', form.__dict__)
-    return render(request, 'index.html', {'form': form})
+    return render(request, 'design/person_edit.html', {'form': form})
 
 
-def update(request, id):
-    person = Person.objects.get(id=id)
-    form = PersonForm(request.POST, instance = person)
-    if form.is_valid():
-        form.save()
-        return redirect("/show")
-    return render(request, 'index.html', {'person': person})
+def person_detail(request, id):
+    person = get_object_or_404(Person, pk=id)
+
+    return render(request, 'design/person_detail.html', {'person': person})
+
+
+# def update(request, id):
+#     person = Person.objects.get(id=id)
+#     form = PersonForm(request.POST, instance = person)
+#     if form.is_valid():
+#         form.save()
+#         return redirect("/show")
+#     return render(request, 'index.html', {'person': person})
 def destroy(request, id):
     person = Person.objects.get(id=id)
     person.delete()
